@@ -15,7 +15,20 @@ public class View extends JFrame implements ActionListener {
     private JTextPane htmlTextPane = new JTextPane();
     private JEditorPane plainTextPane = new JEditorPane();
 
+    public View() {
+        try {
+            UIManager manager = new UIManager();
+            String standardLookAndFeel = UIManager.getSystemLookAndFeelClassName();
+            UIManager.setLookAndFeel(standardLookAndFeel);
 
+            SwingUtilities.updateComponentTreeUI(tabbedPane);
+            SwingUtilities.updateComponentTreeUI(htmlTextPane);
+            SwingUtilities.updateComponentTreeUI(plainTextPane);
+        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException |
+                 IllegalAccessException e) {
+            ExceptionHandler.log(e);
+        }
+    }
 
     public Controller getController() {
         return controller;
@@ -41,7 +54,17 @@ public class View extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    public void initMenuBar() {}
+    public void initMenuBar() {
+        JMenuBar menuBar = new JMenuBar();
+        MenuHelper.initFileMenu(this, menuBar);
+        MenuHelper.initEditMenu(this, menuBar);
+        MenuHelper.initStyleMenu(this, menuBar);
+        MenuHelper.initAlignMenu(this, menuBar);
+        MenuHelper.initColorMenu(this, menuBar);
+        MenuHelper.initFontMenu(this, menuBar);
+        MenuHelper.initHelpMenu(this, menuBar);
+        getContentPane().add(menuBar, BorderLayout.NORTH);
+    }
 
     public void initEditor() {
         htmlTextPane.setContentType("text/html");
