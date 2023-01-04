@@ -13,6 +13,7 @@ public class StrikeThroughAction extends StyledEditorKit.StyledTextAction {
         super(StyleConstants.StrikeThrough.toString());
     }
 
+    @Override
     public void actionPerformed(ActionEvent actionEvent) {
         JEditorPane editor = getEditor(actionEvent);
         if (editor != null) {
